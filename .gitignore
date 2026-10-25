@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.coverage
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+.DS_Store
+.idea/
+docs/_build/
+docs/api/
+output/
+examples/output/
+

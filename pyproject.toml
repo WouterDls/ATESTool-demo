@@ -1,0 +1,65 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ATESTool"
+version = "0.1.0"
+description = "Config-driven ATES groundwater-interaction modelling on MODFLOW 6 (GWF + GWE) via FloPy"
+readme = "README.md"
+license = { file = "LICENSE.md" }
+requires-python = ">=3.10"
+dependencies = [
+    "flopy",
+    "pyyaml",
+    "numpy>=1.24,<2",
+    "scipy>=1.10,<1.15",
+    "matplotlib>=3.7,<3.10",
+    "pandas>=2,<3",
+    "xarray>=2023,<2026",
+]
+
+[project.optional-dependencies]
+# Triangle is an external, non-commercial-licensed meshing library, opt-in only,
+# never auto-installed. See INSTALL.md.
+mesh = ["triangle"]
+dev = ["mypy>=1.8,<2"]
+docs = ["sphinx", "myst-parser", "furo"]
+
+[project.scripts]
+ATESTool = "ATESTool.run:cli"
+
+[tool.setuptools.packages.find]
+include = ["ATESTool*"]
+
+[tool.mypy]
+# Strict static checking for the deterministic package.
+python_version = "3.10"
+packages = ["ATESTool"]
+strict = true
+
+[[tool.mypy.overrides]]
+# Third-party scientific libraries that ship no type stubs.
+module = [
+    "yaml",
+    "flopy.*",
+    "scipy.*",
+    "triangle",
+    "matplotlib.*",
+    "mpl_toolkits.*",
+    "pandas.*",
+    "xarray.*",
+]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+# Numerical modules stay strict (annotations required) but don't fight numpy's
+# generic array types.
+module = [
+    "ATESTool.mesh.*",
+    "ATESTool.model.*",
+    "ATESTool.analysis.*",
+    "ATESTool.validation.*",
+]
+disallow_any_generics = false
+warn_return_any = false
