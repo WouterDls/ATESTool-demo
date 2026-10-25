@@ -34,7 +34,7 @@ Then install ATESTool:
 
 ```bash
 pip install -e .            # runtime
-pip install -e ".[dev]"     # + pytest, pytest-cov, mypy
+pip install -e ".[dev]"     # + mypy
 ```
 
 Requires Python ≥ 3.10.
