@@ -76,6 +76,7 @@ def _zoom_limits(
     cx, cy = (min(xs) + max(xs)) / 2.0, (min(ys) + max(ys)) / 2.0
     half_x = max((max(xs) - min(xs)) / 2.0 * (1.0 + _ZOOM_PADDING_FACTOR), _ZOOM_MIN_HALF_SIZE)
     half_y = max((max(ys) - min(ys)) / 2.0 * (1.0 + _ZOOM_PADDING_FACTOR), _ZOOM_MIN_HALF_SIZE)
+    half_x = half_y = max(half_x, half_y)
 
     mesh_x_min, mesh_x_max = float(mesh.vertices[:, 0].min()), float(mesh.vertices[:, 0].max())
     mesh_y_min, mesh_y_max = float(mesh.vertices[:, 1].min()), float(mesh.vertices[:, 1].max())
@@ -494,7 +495,7 @@ def plot_model_overview(
 
     # --- GWF (flow) ---
     if gwf_field == "drawdown":
-        plot_drawdown(sim, snap_t, mesh, ax=ax_head_map, schedule=schedule)
+        plot_drawdown(sim, snap_t, mesh, ax=ax_head_map, schedule=schedule, zoom=True)
         ax_head_map.set_title(f"GWF: drawdown [m] @ t={snap_t:.0f} d")
         initial_head = _reference_head(sim, float(ts["head"].iloc[0]))
         ax_head_ts.plot(ts.index, initial_head - ts["head"], color=_COLD_COLOR)

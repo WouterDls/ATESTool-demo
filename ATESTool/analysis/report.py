@@ -11,7 +11,13 @@ import base64
 import html
 import math
 from pathlib import Path
-from typing import Sequence
+from typing import TYPE_CHECKING, Sequence
+
+if TYPE_CHECKING:
+    from ATESTool.analysis.results import SimulationResult
+    from ATESTool.config import Config
+    from ATESTool.mesh import VertexGrid
+    from ATESTool.model.schedule import WellSchedule
 
 _CSS = """
 body { font-family: -apple-system, Helvetica, Arial, sans-serif; margin: 2rem; color: #1a1a1a; }
@@ -86,3 +92,43 @@ def write_html_report(
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(document, encoding="utf-8")
     return path
+
+
+def write_run_report(
+    path: Path | str,
+    sim: SimulationResult,
+    mesh: VertexGrid,
+    schedule: WellSchedule,
+    config: Config,
+) -> Path:
+    """Write a compact single-run report without launching additional model runs."""
+    from ATESTool.analysis.plots import (
+        plot_energy_balance,
+        plot_model_overview,
+        plot_timeseries,
+    )
+
+    path = Path(path)
+    plot_dir = path.parent / "plots"
+    plot_dir.mkdir(parents=True, exist_ok=True)
+    figures = [
+        ("model_overview.png", plot_model_overview(sim, mesh, schedule)),
+        ("extraction_timeseries.png", plot_timeseries(sim)),
+        ("energy_balance.png", plot_energy_balance(sim, schedule, config)),
+    ]
+    plot_paths: list[Path] = []
+    for name, figure in figures:
+        plot_path = plot_dir / name
+        figure.savefig(plot_path, dpi=160, bbox_inches="tight")
+        plot_paths.append(plot_path)
+
+    return write_html_report(
+        path,
+        stats=sim.stats,
+        summary_text=(
+            "This report describes one completed model run. Generating it did not launch "
+            "spatial, temporal, or domain-refinement simulations."
+        ),
+        plot_paths=plot_paths,
+        title="ATESTool run report",
+    )

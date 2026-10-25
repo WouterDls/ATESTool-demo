@@ -25,6 +25,7 @@ _DEFAULT_WORKSPACE = "atestool_output"
 def run_from_config(
     config_path: str | Path,
     workspace: str | Path | None = None,
+    report: bool = False,
     diagnostic: bool = False,
 ) -> None:
     """Run the deterministic pipeline from a YAML config.
@@ -32,7 +33,9 @@ def run_from_config(
     The pipeline loads the config, generates the mesh, builds and runs the model, analyses
     the results, and writes ``timeseries.csv`` and ``stats.json``.
 
-    ``diagnostic=True`` additionally writes every plot and runs the
+    ``report=True`` writes a compact, self-contained HTML report and three figures from
+    the completed run without launching another model. ``diagnostic=True`` additionally
+    writes every plot and runs the
     spatial, temporal and analytical verification studies into ``<workspace>/diagnostic/``.
     That costs several extra model runs, see :mod:`ATESTool.diagnostic`. The normal
     single-run artifacts are written first and are unaffected; a diagnostic stage that
@@ -61,6 +64,14 @@ def run_from_config(
         )
     logger.info("done: outputs in %s", work)
 
+    if report:
+        from ATESTool.analysis.report import write_run_report
+
+        report_path = write_run_report(
+            work / "report.html", result, mesh, model_paths.schedule, config
+        )
+        logger.info("report: %s", report_path)
+
     if diagnostic:
         # Imported here so the default path never pays for matplotlib.
         from ATESTool.diagnostic import run_diagnostic
@@ -76,6 +87,11 @@ def cli(argv: list[str] | None = None) -> None:
     parser.add_argument("config", help="path to the YAML config file")
     parser.add_argument("--workspace", default=None, help="output directory")
     parser.add_argument(
+        "--report",
+        action="store_true",
+        help="write a compact HTML report and figures without additional model runs",
+    )
+    parser.add_argument(
         "--diagnostic",
         action="store_true",
         help=(
@@ -89,6 +105,7 @@ def cli(argv: list[str] | None = None) -> None:
     run_from_config(
         args.config,
         workspace=args.workspace,
+        report=args.report,
         diagnostic=args.diagnostic,
     )
 

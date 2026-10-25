@@ -44,8 +44,8 @@ Requires Python ≥ 3.10.
 ```python
 from ATESTool import run_from_config
 
-# Single deterministic run -> writes timeseries.csv + stats.json to ./output
-run_from_config("examples/base.yaml", workspace="output")
+# Single deterministic run -> CSV, JSON, figures, and a self-contained HTML report
+run_from_config("examples/base.yaml", workspace="output", report=True)
 
 ```
 
@@ -53,12 +53,15 @@ Or from the command line:
 
 ```bash
 ATESTool examples/base.yaml --workspace output
+ATESTool examples/base.yaml --workspace output --report
 ATESTool my_config.yaml --diagnostic --workspace output   # + plots & verification studies
 ```
 
 See [`examples/base.yaml`](examples/base.yaml) for a complete single-layer configuration.
-The [`examples`](examples/README.md) directory contains the three runnable SoftwareX
-demonstrations: material interference, siting sensitivity, and accumulation.
+The [`examples`](examples/README.md) directory contains two runnable SoftwareX
+demonstrations: reciprocal ATES--groundwater-extraction interaction and ATES-layout
+sensitivity. Each example writes CSV results, a review-ready figure, and a self-contained
+HTML report.
 
 ## Time stepping (temporal resolution)
 
