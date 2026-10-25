@@ -158,7 +158,10 @@ python -m compileall -q ATESTool examples
 
 ## Documentation
 
-The full API reference is built with Sphinx from the module docstrings:
+The rendered user and API documentation is available at
+[wouterdls.github.io/ATESTool-demo](https://wouterdls.github.io/ATESTool-demo/).
+
+The documentation is built automatically with GitHub Pages. To build it locally:
 
 ```bash
 pip install -e ".[docs]"
