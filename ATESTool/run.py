@@ -31,7 +31,8 @@ def run_from_config(
     """Run the deterministic pipeline from a YAML config.
 
     The pipeline loads the config, generates the mesh, builds and runs the model, analyses
-    the results, and writes ``timeseries.csv`` and ``stats.json``.
+    the results, and writes ``timeseries.csv``, ``energy.csv``, ``recovery.csv``,
+    and ``stats.json``.
 
     ``report=True`` writes a compact, self-contained HTML report and three figures from
     the completed run without launching another model. ``diagnostic=True`` additionally
@@ -57,6 +58,8 @@ def run_from_config(
     logger.info("analysing results")
     result = analyse(model_paths, raw, config, mesh)
     result.timeseries.to_csv(work / "timeseries.csv")
+    result.energy_balance.to_csv(work / "energy.csv", index=False)
+    result.efficiency.to_csv(work / "recovery.csv")
     (work / "stats.json").write_text(json.dumps(result.stats, indent=2))
     if config.analysis.observation_points:
         result.observation_timeseries(config.analysis.observation_points, mesh).to_csv(

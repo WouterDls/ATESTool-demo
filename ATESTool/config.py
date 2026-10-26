@@ -34,6 +34,7 @@ class MeshConfig:
     refinement_rings: list[RefinementRing]
     thermal_refinement: str = "manual"
     background_max_cell_size: float | None = None
+    refinement_points: list[tuple[float, float]] = field(default_factory=list)
 
 
 @dataclass
@@ -225,9 +226,16 @@ def _parse_mesh(d: Mapping[str, Any]) -> MeshConfig:
         _scalar(d["background_max_cell_size"], "mesh.background_max_cell_size")
         if "background_max_cell_size" in d else None
     )
+    points_raw = d.get("refinement_points", [])
+    if not isinstance(points_raw, list):
+        raise ConfigError("mesh.refinement_points: expected a list")
+    refinement_points = [
+        _coords({"point": point}, "point", f"mesh.refinement_points[{i}]")
+        for i, point in enumerate(points_raw)
+    ]
     return MeshConfig(
         _leaf(d, "width", "mesh"), _leaf(d, "height", "mesh"), rings,
-        str(thermal_refinement), background,
+        str(thermal_refinement), background, refinement_points,
     )
 
 

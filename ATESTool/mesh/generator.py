@@ -159,7 +159,9 @@ def _well_refinement(
     ]
     auto = config.mesh.thermal_refinement == "auto"
 
-    out: list[tuple[Point, list[tuple[float, float]]]] = []
+    out: list[tuple[Point, list[tuple[float, float]]]] = [
+        ((float(x), float(y)), base_rings) for x, y in config.mesh.refinement_points
+    ]
     for doublet in config.model.doublets:
         rings = base_rings
         if auto:

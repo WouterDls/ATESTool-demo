@@ -1,0 +1,19 @@
+# Case 2: reversed longitudinal layout.
+mesh:
+  width: 10000.0
+  height: 10000.0
+  background_max_cell_size: 300.0
+  thermal_refinement: manual
+  refinement_points: [[0.0, 100.0], [0.0, 200.0], [0.0, 300.0], [0.0, 450.0], [0.0, 550.0], [-50.0, 250.0], [50.0, 250.0]]
+  refinement_rings: [{radius: 20.0, max_cell_size: 5.0}, {radius: 50.0, max_cell_size: 10.0}, {radius: 150.0, max_cell_size: 30.0}]
+model:
+  aquifer:
+    layers:
+      - {top: 0.0, bottom: -25.0, hydraulic_conductivity: 10.0, porosity: 0.30, specific_storage: 1.0e-5, initial_temperature: 12.0, longitudinal_dispersivity: 5.0, transverse_dispersivity: 0.5, thermal_conductivity_water: 0.6, thermal_conductivity_solid: 2.5, heat_capacity_water: 4186.0, density_water: 1000.0, heat_capacity_solid: 800.0, density_solid: 2650.0}
+  chd_heads: {north: 10.5, south: 9.5, east: 10.0, west: 10.0, mode: linear}
+  recharge: 0.0
+  doublets:
+    - {name: reversed, warm_well: [0.0, 300.0], cold_well: [0.0, 200.0], flow_rate: 200.0, warm_injection_temperature: 17.0, cold_injection_temperature: 7.0}
+  extraction_well: {coordinates: [0.0, 0.0], flow_rate: 1000.0}
+  simulation: {n_years: 20, season_length_days: 182.5, timesteps_per_season: 48, time_stepping: {mode: fixed, target_courant: 1.0, tsmult: 1.0, ats_dtadj: 2.0, ats_dtfailadj: 5.0}}
+analysis: {output_variables: [temperature, head], times_of_interest: [1825.0, 3650.0, 5475.0, 7300.0]}

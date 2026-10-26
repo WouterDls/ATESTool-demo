@@ -29,6 +29,7 @@ The domain is centred on the origin and spans `[-width/2, width/2]` by
 | `refinement_rings` | list of `{radius, max_cell_size}`, m | required | Applied around every well; may be empty. |
 | `thermal_refinement` | `manual` or `auto` | `manual` | `auto` adds a thermal-radius ring around each doublet well. |
 | `background_max_cell_size` | number, m | derived | Far-field target cell size; omitted means `min(width, height) / 20`. |
+| `refinement_points` | list of `[x, y]`, m | `[]` | Optional mesh-only refinement centres. Use the same list in matched scenarios to keep their meshes comparable without adding inactive model wells. |
 
 ## `model.aquifer.layers`
 

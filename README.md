@@ -34,6 +34,7 @@ Then install ATESTool:
 
 ```bash
 pip install -e .            # runtime
+pip install -e ".[mesh]"       # + Triangle mesh support
 pip install -e ".[dev]"     # + mypy
 ```
 
@@ -58,10 +59,11 @@ ATESTool my_config.yaml --diagnostic --workspace output   # + plots & verificati
 ```
 
 See [`examples/base.yaml`](examples/base.yaml) for a complete single-layer configuration.
-The [`examples`](examples/README.md) directory contains two runnable SoftwareX
-demonstrations: reciprocal ATES--groundwater-extraction interaction and ATES-layout
-sensitivity. Each example writes CSV results, a review-ready figure, and a self-contained
-HTML report.
+The [`examples`](examples/README.md) directory contains an introductory run and the two
+SoftwareX comparison cases. Every physical state has its own YAML file and is run with the
+same command-line interface. Each run writes its own HTML report and CSV tables. Blank,
+formula-driven Excel templates are supplied for combining the state results without running
+an example-specific Python script; a populated `_solution.xlsx` accompanies each template.
 
 ## Time stepping (temporal resolution)
 
