@@ -15,6 +15,10 @@ run_from_config("examples/base.yaml", diagnostic=True, workspace="output")
 The compact report is written to `output/report.html`, with its PNG figures under
 `output/plots/`. Omit `report=True` when only the CSV and JSON outputs are needed.
 
+When multiple temperature snapshots are available, the report includes a thermal plume
+player. Use Play/Pause or the time slider to inspect the saved fields. The map and
+temperature-change scale stay fixed throughout playback.
+
 See {doc}`installation` for setting up the two external dependencies (Triangle,
 MODFLOW 6) before running a model.
 

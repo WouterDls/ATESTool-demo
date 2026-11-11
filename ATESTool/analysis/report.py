@@ -59,6 +59,8 @@ def write_html_report(
     plot_paths: Sequence[Path],
     summary_text: str = "",
     title: str = "ATESTool run report",
+    *,
+    plume_html: str = "",
 ) -> Path:
     """Write one self-contained HTML file: a stats table, an optional summary, then every plot.
 
@@ -77,6 +79,8 @@ def write_html_report(
         sections.append("<h2>Summary</h2>")
         sections.append(f"<pre>{html.escape(summary_text)}</pre>")
 
+    if plume_html:
+        sections.append(plume_html)
     sections.append(f"<h2>Plots ({len(plot_paths)})</h2>")
     for p in plot_paths:
         if Path(p).exists():
@@ -100,6 +104,8 @@ def write_run_report(
     mesh: VertexGrid,
     schedule: WellSchedule,
     config: Config,
+    *,
+    animate_plume: bool = True,
 ) -> Path:
     """Write a compact single-run report without launching additional model runs."""
     from ATESTool.analysis.plots import (
@@ -108,6 +114,7 @@ def write_run_report(
         plot_model_overview,
         plot_timeseries,
     )
+    from ATESTool.analysis.plume_player import plume_player
 
     path = Path(path)
     plot_dir = path.parent / "plots"
@@ -133,4 +140,5 @@ def write_run_report(
         ),
         plot_paths=plot_paths,
         title="ATESTool run report",
+        plume_html=plume_player(sim, mesh, schedule, config) if animate_plume else "",
     )
