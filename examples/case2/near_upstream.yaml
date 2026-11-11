@@ -1,4 +1,4 @@
-# Case 2: near longitudinal layout.
+# Case 2: near longitudinal layout, upstream under the regional gradient.
 mesh:
   width: 10000.0
   height: 10000.0
