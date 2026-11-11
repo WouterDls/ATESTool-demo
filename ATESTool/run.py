@@ -34,7 +34,7 @@ def run_from_config(
     the results, and writes ``timeseries.csv``, ``energy.csv``, ``recovery.csv``,
     and ``stats.json``.
 
-    ``report=True`` writes a compact, self-contained HTML report and three figures from
+    ``report=True`` writes a compact, self-contained HTML report and figures from
     the completed run without launching another model. ``diagnostic=True`` additionally
     writes every plot and runs the
     spatial, temporal and analytical verification studies into ``<workspace>/diagnostic/``.

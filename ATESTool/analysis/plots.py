@@ -528,6 +528,64 @@ def plot_model_overview(
     return fig
 
 
+def plot_conceptual_model(sim: SimulationResult, mesh: VertexGrid, config: Config) -> Figure:
+    """Well layout, final head contours, and a schematic of fully penetrating wells."""
+    fig = Figure(figsize=(11, 5), layout="constrained")
+    plan, section = fig.subplots(1, 2)
+    time = float(sim.timeseries.index[-1])
+    head = sim.snapshot(time, "head")
+    x, y = mesh.centroids.T
+    if np.ptp(head) > 1e-8:
+        contours = plan.tricontour(x, y, head, levels=8, colors="0.5", linewidths=0.8)
+        plan.clabel(contours, fmt="%.2f", fontsize=7)
+    plan.set(xlabel="Easting [m]", ylabel="Northing [m]",
+             title=f"Hydraulic head [m], day {time:g}", aspect="equal")
+
+    chd = config.model.chd_heads
+    dx = (chd.west - chd.east) / config.mesh.width
+    dy = (chd.south - chd.north) / config.mesh.height
+    norm = math.hypot(dx, dy)
+    if chd.mode == "linear" and norm:
+        plan.annotate("", xy=(0.16 + 0.1 * dx / norm, 0.82 + 0.1 * dy / norm),
+                      xytext=(0.16, 0.82), xycoords="axes fraction",
+                      arrowprops={"arrowstyle": "->", "color": "black"})
+        plan.text(0.03, 0.95, "Imposed regional flow", transform=plan.transAxes, va="top")
+
+    wells = []
+    extraction = config.model.extraction_well
+    if extraction.flow_rate:
+        wells.append(("Extraction", extraction.coordinates, "black"))
+    for doublet in config.model.doublets:
+        if doublet.flow_rate:
+            wells.extend([
+                ("Warm", doublet.warm_well, _WARM_COLOR),
+                ("Cold", doublet.cold_well, _COLD_COLOR),
+            ])
+    layers = config.model.aquifer.layers
+    for i, layer in enumerate(layers):
+        section.axhspan(layer.bottom, layer.top, color="tab:blue", alpha=0.1 + 0.06 * (i % 2))
+        section.axhline(layer.bottom, color="0.7", linewidth=0.8)
+    labels = set()
+    for i, (label, (wx, wy), color) in enumerate(wells, start=1):
+        plan.scatter(wx, wy, c=color, zorder=4, label=label if label not in labels else None)
+        labels.add(label)
+        section.vlines(i, layers[-1].bottom, layers[0].top, color=color, linewidth=4)
+    if wells:
+        plan.legend(loc="lower right", fontsize="small")
+        half_span = max(
+            50.0,
+            0.75 * max(np.ptp([well[1][j] for well in wells]) for j in (0, 1)),
+        )
+        for j, set_limits in enumerate((plan.set_xlim, plan.set_ylim)):
+            coordinates = [well[1][j] for well in wells]
+            centre = (min(coordinates) + max(coordinates)) / 2
+            set_limits(centre - half_span, centre + half_span)
+    section.set_xticks(range(1, len(wells) + 1), [well[0] for well in wells], rotation=30)
+    section.set(xlim=(0, len(wells) + 1), ylabel="Elevation [m]",
+                title="Aquifer and screened intervals (schematic)")
+    return fig
+
+
 def _overlay_wells(ax: Any, schedule: WellSchedule) -> None:
     """Scatter warm/cold doublet wells, one legend entry per well kind."""
     seen: set[str] = set()

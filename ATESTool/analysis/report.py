@@ -109,6 +109,7 @@ def write_run_report(
     )
 
     path = Path(path)
+        plot_conceptual_model,
     plot_dir = path.parent / "plots"
     plot_dir.mkdir(parents=True, exist_ok=True)
     figures = [
@@ -119,6 +120,7 @@ def write_run_report(
     plot_paths: list[Path] = []
     for name, figure in figures:
         plot_path = plot_dir / name
+        ("conceptual_model.png", plot_conceptual_model(sim, mesh, config)),
         figure.savefig(plot_path, dpi=160, bbox_inches="tight")
         plot_paths.append(plot_path)
 
