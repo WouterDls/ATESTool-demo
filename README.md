@@ -27,7 +27,7 @@ first (full details in [`INSTALL.md`](INSTALL.md)):
    **restricted for commercial use**: verify its licence for your context.
 
 2. **MODFLOW 6** binary on your `PATH` (or pointed to by `$MF6_BIN`), needed only
-   to *run* models. **GWE requires mf6 ≥ 6.5**, and on Apple Silicon you need an
+   to *run* models. **Use mf6 6.6.1 to reproduce the examples**, and on Apple Silicon you need an
    **arm64** build.
 
 Then install ATESTool:

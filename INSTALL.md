@@ -47,8 +47,7 @@ MODFLOW 6 executable on your `PATH`.
 
 ```{warning}
 **Version & architecture matter.**
-- The **GWE** (groundwater energy transport) model used by ATESTool requires
-  **MODFLOW 6 ≥ 6.5.0**. Earlier builds (e.g. 6.4.4) do **not** include GWE.
+- **MODFLOW 6 must be newer than 6.5.0.** The examples were verified with 6.6.1.
 - On **Apple Silicon (arm64)** you need an **arm64** build. An x86_64 build will
   fail with `bad CPU type in executable` unless Rosetta 2 is installed.
 ```
