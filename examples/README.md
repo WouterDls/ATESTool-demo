@@ -50,10 +50,10 @@ Run the common reference and four ATES layouts:
 ```bash
 ATESTool examples/case2/without_ates.yaml \
   --workspace examples/output/case2/without_ates --report
-ATESTool examples/case2/near_downstream.yaml \
-  --workspace examples/output/case2/near_downstream --report
-ATESTool examples/case2/far_downstream.yaml \
-  --workspace examples/output/case2/far_downstream --report
+ATESTool examples/case2/near_upstream.yaml \
+  --workspace examples/output/case2/near_upstream --report
+ATESTool examples/case2/far_upstream.yaml \
+  --workspace examples/output/case2/far_upstream --report
 ATESTool examples/case2/transverse.yaml \
   --workspace examples/output/case2/transverse --report
 ATESTool examples/case2/reversed_longitudinal.yaml \
@@ -65,6 +65,11 @@ run's complete `timeseries.csv`, including its header row, as values at A1 of th
 yellow source sheet. The formulas subtract the `Without ATES` reference and update the
 comparison chart and summary automatically. `case2_analysis_solution.xlsx` contains the
 worked result, while `case2_analysis_template.xlsx` remains empty for reuse.
+
+The near and far doublets are upstream of the extraction well under the imposed
+north-to-south regional flow. These files were previously named `near_downstream.yaml`
+and `far_downstream.yaml`. Their coordinates and Excel source sheets (`Near time`
+and `Far time`) are unchanged.
 
 The YAML files within each comparison case use identical mesh settings and a shared list of
 refinement points. This keeps the meshes aligned even when a well is inactive in one state.

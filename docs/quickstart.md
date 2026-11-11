@@ -14,6 +14,10 @@ run_from_config("examples/base.yaml", diagnostic=True, workspace="output")
 
 The compact report is written to `output/report.html`, with its PNG figures under
 `output/plots/`. Omit `report=True` when only the CSV and JSON outputs are needed.
+The report includes a conceptual view of the active wells and aquifer layers alongside
+the final hydraulic head contours. In a terminal, a progress bar shows the percentage
+of simulated time completed and the elapsed solver time. Adaptive runs update the
+percentage at stress-period boundaries. Redirected output gets one completion line.
 
 When multiple temperature snapshots are available, the report includes a thermal plume
 player. Use Play/Pause or the time slider to inspect the saved fields. The map and
@@ -35,8 +39,8 @@ ATESTool examples/case1/extraction_only.yaml --workspace examples/output/case1/e
 ATESTool examples/case1/ates_only.yaml --workspace examples/output/case1/ates_only --report
 
 ATESTool examples/case2/without_ates.yaml --workspace examples/output/case2/without_ates --report
-ATESTool examples/case2/near_downstream.yaml --workspace examples/output/case2/near_downstream --report
-ATESTool examples/case2/far_downstream.yaml --workspace examples/output/case2/far_downstream --report
+ATESTool examples/case2/near_upstream.yaml --workspace examples/output/case2/near_upstream --report
+ATESTool examples/case2/far_upstream.yaml --workspace examples/output/case2/far_upstream --report
 ATESTool examples/case2/transverse.yaml --workspace examples/output/case2/transverse --report
 ATESTool examples/case2/reversed_longitudinal.yaml --workspace examples/output/case2/reversed_longitudinal --report
 ```
