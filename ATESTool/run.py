@@ -54,7 +54,7 @@ def run_from_config(
     logger.info("building model")
     model_paths = build_model(config, mesh, work)
     logger.info("running model")
-    raw = run_model(model_paths)
+    raw = run_model(model_paths, progress=logger.isEnabledFor(logging.INFO))
     logger.info("analysing results")
     result = analyse(model_paths, raw, config, mesh)
     result.timeseries.to_csv(work / "timeseries.csv")
