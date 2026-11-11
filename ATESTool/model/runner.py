@@ -1,6 +1,6 @@
 """``run_model``: execute a written simulation via the MODFLOW 6 binary.
 
-Requires a MODFLOW 6 executable (>= 6.5 for GWE) resolvable as ``$MF6_BIN`` or
+Requires a MODFLOW 6 executable with current GWE input support, resolvable as ``$MF6_BIN`` or
 ``mf6`` on PATH. Returns a private ``_RawOutput`` (success flag + output paths).
 """
 
@@ -8,6 +8,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+import re
+import subprocess
 
 import flopy
 
@@ -27,8 +29,18 @@ class _RawOutput:
 
 def run_model(model_paths: _ModelPaths) -> _RawOutput:
     """Run the simulation in its workspace; raise on solver failure."""
+    executable = resolve_mf6_exe()
+    version_output = subprocess.run(
+        [executable, "--version"], capture_output=True, text=True, check=True
+    )
+    version = re.search(r"\bmf6:\s*(\d+)\.(\d+)\.(\d+)", version_output.stdout)
+    if version and tuple(map(int, version.groups())) <= (6, 5, 0):
+        raise RuntimeError(
+            f"MODFLOW {version.group(0).split()[-1]} is unsupported by ATESTool. "
+            "Use MODFLOW 6.6.1, which was verified with the supplied examples."
+        )
     sim = flopy.mf6.MFSimulation.load(
-        sim_ws=str(model_paths.workspace), exe_name=resolve_mf6_exe(), verbosity_level=0
+        sim_ws=str(model_paths.workspace), exe_name=executable, verbosity_level=0
     )
     success, buff = sim.run_simulation(silent=True)
     if not success:
