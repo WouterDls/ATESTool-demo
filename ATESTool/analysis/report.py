@@ -103,16 +103,17 @@ def write_run_report(
 ) -> Path:
     """Write a compact single-run report without launching additional model runs."""
     from ATESTool.analysis.plots import (
+        plot_conceptual_model,
         plot_energy_balance,
         plot_model_overview,
         plot_timeseries,
     )
 
     path = Path(path)
-        plot_conceptual_model,
     plot_dir = path.parent / "plots"
     plot_dir.mkdir(parents=True, exist_ok=True)
     figures = [
+        ("conceptual_model.png", plot_conceptual_model(sim, mesh, config)),
         ("model_overview.png", plot_model_overview(sim, mesh, schedule)),
         ("extraction_timeseries.png", plot_timeseries(sim)),
         ("energy_balance.png", plot_energy_balance(sim, schedule, config)),
@@ -120,7 +121,6 @@ def write_run_report(
     plot_paths: list[Path] = []
     for name, figure in figures:
         plot_path = plot_dir / name
-        ("conceptual_model.png", plot_conceptual_model(sim, mesh, config)),
         figure.savefig(plot_path, dpi=160, bbox_inches="tight")
         plot_paths.append(plot_path)
 
