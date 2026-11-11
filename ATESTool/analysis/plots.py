@@ -125,6 +125,10 @@ def plot_timeseries(sim: SimulationResult, ax: Any | None = None) -> Figure:
     ax.plot(ts.index, ts["temperature"], color="tab:red", label="temperature")
     ax.set_xlabel("time [days]")
     ax.set_ylabel("temperature [degC]", color="tab:red")
+    low, high = ax.get_ylim()
+    if high - low < 0.2:
+        centre = (low + high) / 2
+        ax.set_ylim(centre - 0.1, centre + 0.1)
 
     ax_head = ax.twinx()
     ax_head.plot(ts.index, ts["head"], color="tab:blue", label="head")
