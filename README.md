@@ -1,3 +1,5 @@
+[![Documentation](https://img.shields.io/badge/docs-read_here-blue)](https://wouterdls.github.io/ATESTool-demo/)
+
 # ATESTool
 
 ATESTool is a config-driven tool for modelling **ATES (Aquifer Thermal Energy
