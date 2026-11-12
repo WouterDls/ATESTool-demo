@@ -9,36 +9,10 @@ mesh, model, or analysis modules directly.
 
 ## Installation
 
-Two external pieces of software are **not** installed by `pip`; install them
-first (full details in [`INSTALL.md`](INSTALL.md)):
-
-1. **Triangle** mesh generator: via the optional `triangle` PyPI package (a Python
-   wrapper around J.R. Shewchuk's Triangle C library):
-
-   ```bash
-   pip install triangle          # or: pip install -e ".[mesh]"
-   ```
-
-   ATESTool triangulates the domain, then builds the **Voronoi dual** and uses the
-   Voronoi polygons as MODFLOW 6 DISV cells (their generators satisfy the CVFD
-   orthogonality requirement; wells are generators, so each sits at a cell centre).
-   If `triangle` is absent, ATESTool falls back to `scipy.spatial.Delaunay` raw
-   triangles (no per-well refinement, no Voronoi dual) with a warning. ⚠️ Triangle is
-   **restricted for commercial use**: verify its licence for your context.
-
-2. **MODFLOW 6** binary on your `PATH` (or pointed to by `$MF6_BIN`), needed only
-   to *run* models. **Use mf6 6.6.1 to reproduce the examples**, and on Apple Silicon you need an
-   **arm64** build.
-
-Then install ATESTool:
-
-```bash
-pip install -e .            # runtime
-pip install -e ".[mesh]"       # + Triangle mesh support
-pip install -e ".[dev]"     # + mypy
-```
-
-Requires Python ≥ 3.10.
+Follow the [installation guide](INSTALL.md) for Windows, Linux, or macOS.
+It uses a Conda environment with **Python 3.12** and walks through installing
+ATESTool with the Triangle mesh backend, installing MODFLOW 6.6.1, and running
+the first example. Review Triangle's licence before commercial use.
 
 ## Quickstart
 

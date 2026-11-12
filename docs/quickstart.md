@@ -23,15 +23,14 @@ When multiple temperature snapshots are available, the report includes a thermal
 player. Use Play/Pause or the time slider to inspect the saved fields. The map and
 temperature-change scale stay fixed throughout playback.
 
-See {doc}`installation` for setting up the two external dependencies (Triangle,
-MODFLOW 6) before running a model.
+Follow {doc}`installation` to set up the Python 3.12 environment, the mesh backend,
+and MODFLOW 6 before running a model.
 
 ## Run the examples
 
-Install the mesh dependency, then run each physical state directly from its YAML file:
+With the ATESTool environment active, run each physical state directly from its YAML file:
 
 ```bash
-pip install -e ".[mesh]"
 ATESTool examples/single_run.yaml --workspace examples/output/e1_single_run --report
 
 ATESTool examples/case1/combined.yaml --workspace examples/output/case1/combined --report

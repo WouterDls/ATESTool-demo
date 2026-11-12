@@ -1,7 +1,7 @@
 # Running the examples
 
 End users run only YAML files. No example-specific Python script is required. Run every
-command from the repository root after installing ATESTool with `pip install -e ".[mesh]"`.
+command from the repository root with the environment from the [installation guide](../INSTALL.md) active.
 Each command uses a separate workspace and creates `report.html`, `timeseries.csv`,
 `energy.csv`, `recovery.csv`, `stats.json`, the MODFLOW files, and report figures.
 

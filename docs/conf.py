@@ -19,6 +19,8 @@ extensions = [
     "myst_parser",
 ]
 
+myst_heading_anchors = 2
+
 napoleon_numpy_docstring = True
 napoleon_google_docstring = False
 
