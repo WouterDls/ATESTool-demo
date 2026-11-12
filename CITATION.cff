@@ -1,0 +1,15 @@
+cff-version: "1.2.0"
+message: "If you use ATESTool in your work, please cite the software using the metadata below."
+title: "ATESTool"
+type: software
+authors:
+  - family-names: "Deleersnyder"
+    given-names: "Wouter"
+    orcid: "https://orcid.org/0000-0003-4481-1801"
+  - family-names: "Hermans"
+    given-names: "Thomas"
+version: "0.1.0"
+license: MIT
+repository-code: "https://github.com/WouterDls/ATESTool-demo"
+url: "https://github.com/WouterDls/ATESTool-demo"
+abstract: "ATESTool models aquifer thermal energy storage and its interaction with groundwater extraction using MODFLOW 6."
