@@ -5,6 +5,9 @@ command from the repository root with the environment from the [installation gui
 Each command uses a separate workspace and creates `report.html`, `timeseries.csv`,
 `energy.csv`, `recovery.csv`, `stats.json`, the MODFLOW files, and report figures.
 
+See the [YAML input guide](../docs/config_reference.md) for field meanings, units,
+and options when adapting the examples.
+
 ## Example 1 — single model run
 
 This introductory model simulates five years of ATES operation.

@@ -1,4 +1,5 @@
 # Example 1: one ATES doublet and one groundwater extraction well.
+# Input fields, units and options: ../docs/config_reference.md
 mesh:
   width: 10000.0
   height: 10000.0

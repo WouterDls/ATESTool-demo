@@ -26,6 +26,8 @@ temperature-change scale stay fixed throughout playback.
 Follow {doc}`installation` to set up the Python 3.12 environment, the mesh backend,
 and MODFLOW 6 before running a model.
 
+See {doc}`config_reference` for input meanings, units, and configuration options.
+
 ## Run the examples
 
 With the ATESTool environment active, run each physical state directly from its YAML file:
