@@ -37,11 +37,11 @@ model:
       cold_injection_temperature: 7.0
   extraction_well: {coordinates: [0.0, 0.0], flow_rate: 1000.0}
   simulation:
-    n_years: 20
+    n_years: 5
     season_length_days: 182.5
     timesteps_per_season: 48
     time_stepping: {mode: fixed, target_courant: 1.0, tsmult: 1.0, ats_dtadj: 2.0, ats_dtfailadj: 5.0}
 
 analysis:
   output_variables: [temperature, head]
-  times_of_interest: [1825.0, 3650.0, 5475.0, 7300.0]
+  times_of_interest: [365.0, 730.0, 1095.0, 1460.0, 1825.0]

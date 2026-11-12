@@ -7,6 +7,8 @@ Each command uses a separate workspace and creates `report.html`, `timeseries.cs
 
 ## Example 1 — single model run
 
+This introductory model simulates five years of ATES operation.
+
 ```bash
 ATESTool examples/single_run.yaml \
   --workspace examples/output/e1_single_run \
@@ -73,5 +75,5 @@ and `Far time`) are unchanged.
 
 The YAML files within each comparison case use identical mesh settings and a shared list of
 refinement points. This keeps the meshes aligned even when a well is inactive in one state.
-The 20-year simulations are substantial; runtime depends on the mesh backend, MODFLOW 6
+The 20-year simulations in Cases 1 and 2 are substantial; runtime depends on the mesh backend, MODFLOW 6
 build, and computer.
